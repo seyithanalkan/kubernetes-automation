@@ -1,0 +1,6 @@
+{
+    "yaml.schemas": {
+        "https://json.schemastore.org/kustomization.json": "file:///root/Kubernetes/react-helm/templates/abc.yaml",
+        "https://json.schemastore.org/yamllint.json": "file:///root/Kubernetes/helm/react-docker/templates/react/deploymnet.yaml"
+    }
+}

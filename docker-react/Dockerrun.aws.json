@@ -1,0 +1,12 @@
+{
+    "AWSEBDockerrunVersion": "1",
+    "Image": {
+      "Name": "544167776152.dkr.ecr.eu-central-1.amazonaws.com/react-docker:latest"
+    },
+    "Ports": [
+      {
+        "hostPort": 80,
+        "ContainerPort": 80
+      }
+    ]
+  }

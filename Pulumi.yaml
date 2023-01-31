@@ -1,0 +1,6 @@
+name: Kubernetes
+description: EKS deploymnet with Pulumi & Helm & Argo CD & Github Action
+runtime:
+    name: python
+    #options:
+    # virtualenv: venv

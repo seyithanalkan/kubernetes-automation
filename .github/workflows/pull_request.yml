@@ -1,0 +1,99 @@
+name: Pulumi
+on:
+  push:
+    branches:
+      - master
+jobs:
+  update:
+    name: Pulumi-Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - run: |
+          pip install -r requirements.txt
+          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 544167776152.dkr.ecr.eu-central-1.amazonaws.com
+          aws_password=$(aws ecr get-login-password)
+          export aws_password
+          envsubst < Argocd/repo.yaml > Argocd/repo.yaml.new
+          mv Argocd/repo.yaml.new Argocd/repo.yaml
+      - uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: seyithan/dev # When using an individual account, only use stack-name.
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+  package-helm:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: master
+
+    - name: Package Helm chart
+      run: |
+        cd helm/react-docker/
+        helm package .
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-region: ${{ secrets.AWS_REGION }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Login to ECR registry
+      run: |
+        $(aws ecr get-login-password --region eu-central-1 | helm registry login 544167776152.dkr.ecr.eu-central-1.amazonaws.com --username AWS --password-stdin)
+
+    - name: Push Helm chart to private ECR
+      run: |
+        export HELM_EXPERIMENTAL_OCI=1
+        pwd
+        ls -larh
+        aws ecr describe-repositories --repository-names react-docker || aws ecr create-repository --repository-name react-docker
+        helm push /home/runner/work/kubernetes-automation/kubernetes-automation/helm/react-docker/*.tgz oci://544167776152.dkr.ecr.eu-central-1.amazonaws.com
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: master
+
+    - name: Docker build
+      run: |
+        cd docker-react
+        docker build -t react-docker -f Dockerfile .
+        docker tag react-docker:latest 544167776152.dkr.ecr.eu-central-1.amazonaws.com/test:latest
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-region: ${{ secrets.AWS_REGION }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Login to ECR registry
+      run: |
+        aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 544167776152.dkr.ecr.eu-central-1.amazonaws.com
+
+    - name: Push Docker to private ECR
+      run: |
+        aws ecr describe-repositories --repository-names test || aws ecr create-repository --repository-name test
+        docker push 544167776152.dkr.ecr.eu-central-1.amazonaws.com/test:latest
+
+
