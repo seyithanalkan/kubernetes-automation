@@ -51,12 +51,12 @@
 ## Screenshots:
 
 ![Secrets](https://drive.google.com/thumbnail?id=1hLPdYy--L7RWFy5oq-iMh8ix3M1wdSp-&sz=w1000)  
-![Github-Action](https://drive.google.com/uc?export=view&id=1TRAZ5abc19xMf3E_jHSZE7D2_zssSt83)  
-![Kubernetes-Cluster](https://drive.google.com/uc?export=view&id=1gTVBp22nSxx8jR05kzMZZuz9-kZ7b3Dz)  
-![React-App](https://drive.google.com/uc?export=view&id=1JDVejJiv1yNUVC59E0ISqGzJZqhM0VOC)  
-![ArgoCD-Access](https://drive.google.com/uc?export=view&id=1JoymQ6T0h8ypVGfPSxY310fSyqe-0BrZ)   
-![ArgoCD-Login](https://drive.google.com/uc?export=view&id=1NHzM9vYxwVCG_PRFCCjHSldqvH-HWHTy)  
-![ArgoCD-Job](https://drive.google.com/uc?export=view&id=116au4DrU81IaUYd7qDYsBguoCvFdll1b)    
+![Github-Action](https://drive.google.com/thumbnail?id=1TRAZ5abc19xMf3E_jHSZE7D2_zssSt83&s=w1000)  
+![Kubernetes-Cluster](https://drive.google.com/thumbnail?id=1gTVBp22nSxx8jR05kzMZZuz9-kZ7b3Dz&sz=w1000)  
+![React-App](https://drive.google.com/thumbnail?id=1JDVejJiv1yNUVC59E0ISqGzJZqhM0VOC&sz=w1000)  
+![ArgoCD-Access](https://drive.google.com/thumbnail?id=1JoymQ6T0h8ypVGfPSxY310fSyqe-0BrZ&sz=w1000)   
+![ArgoCD-Login](https://drive.google.com/thumbnail?id=1NHzM9vYxwVCG_PRFCCjHSldqvH-HWHTy&sz=w1000)  
+![ArgoCD-Job](https://drive.google.com/thumbnail?id=116au4DrU81IaUYd7qDYsBguoCvFdll1b&sz=w1000)    
 
 
 
