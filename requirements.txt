@@ -2,3 +2,5 @@ pulumi>=3.0.0,<4.0.0
 pulumi-aws>=5.0.0,<6.0.0
 pulumi_awsx>=1.0.0-beta.9,<2.0.0
 pulumi-eks==1.0.1
+protobuf>=4.25.8 # not directly required, pinned by Snyk to avoid a vulnerability
+urllib3>=2.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
